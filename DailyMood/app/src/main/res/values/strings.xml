@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">每日心情</string>
+    <string name="select_date">点击选择日期</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="description">您的心情或感想</string>
+    <string name="select_picture">点击选择图片</string>
+    <string name="save">保存</string>
+    <string name="please_select_date">请选择日期</string>
+    <string name="please_select_picture">请选择图片</string>
+    <string name="save_success">保存成功！</string>
+    <string name="welcome">欢迎使用 每日心情~~</string>
+    <string name="hint">您需同意该权限才能正常使用该APP~~</string>
+    <string name="create_card">新建心情卡片</string>
+    <string name="clear_all_cards">清空所有卡片</string>
+    <string name="about_app">关于该APP</string>
+    <string name="clear_success">清空成功！</string>
+    <string name="is_override">已有数据，是否覆盖？</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="cancel_success">取消成功</string>
+    <string name="your_mood">您当天的心情</string>
+</resources>
