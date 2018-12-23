@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         mSPRadioButtonsState = getSharedPreferences("radio_buttons_state", MODE_PRIVATE);
         mEditor = mSPRadioButtonsState.edit();
 
