@@ -1,20 +1,21 @@
 package com.wuchangi.dailymood.adapter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.wuchangi.dailymood.R;
+import com.wuchangi.dailymood.activity.CreateMoodActivity;
 import com.wuchangi.dailymood.activity.MoodDetailActivity;
 import com.wuchangi.dailymood.bean.Mood;
+import com.wuchangi.dailymood.db.MoodTableDao;
 
 import java.util.List;
 
@@ -32,10 +33,12 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
 
     private Context mContext;
     private List<Mood> mMoodList;
+    private MoodTableDao mMoodTableDao;
 
-    public MoodListAdapter(Context context, List<Mood> moodList){
+    public MoodListAdapter(Context context, List<Mood> moodList, MoodTableDao moodTableDao){
         mContext = context;
         mMoodList = moodList;
+        mMoodTableDao = moodTableDao;
     }
 
     @Override
@@ -61,6 +64,23 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
                 MoodDetailActivity.actionStart(mContext, mood.getDate());
             }
         });
+
+        holder.mBtnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateMoodActivity.actionEditStart(mContext, mood.getDate());
+            }
+        });
+
+        holder.mBtnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMoodList.remove(position);
+                notifyItemRemoved(position);
+                mMoodTableDao.deleteMoodByDate(mood.getDate());
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -72,6 +92,20 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
     public void replaceMood(Mood mood){
         for(Mood m: mMoodList){
             if(m.getDate().equals(mood.getDate())){
+                m.setDescription(mood.getDescription());
+                m.setPicturePath(mood.getPicturePath());
+                break;
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+
+    public void updateMood(String date, Mood mood){
+        for(Mood m: mMoodList){
+            if(m.getDate().equals(date)){
+                m.setDate(mood.getDate());
                 m.setDescription(mood.getDescription());
                 m.setPicturePath(mood.getPicturePath());
                 break;
@@ -98,6 +132,12 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
 
         @BindView(R.id.tv_date)
         TextView mTvDate;
+
+        @BindView(R.id.btn_edit)
+        Button mBtnEdit;
+
+        @BindView(R.id.btn_delete)
+        Button mBtnDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);

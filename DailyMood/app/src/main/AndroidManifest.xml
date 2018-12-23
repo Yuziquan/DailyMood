@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -18,9 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CreateMoodActivity"></activity>
-        <activity android:name=".activity.MoodDetailActivity"></activity>
-        <activity android:name=".activity.AboutActivity"></activity>
+        <activity android:name=".activity.CreateMoodActivity" />
+        <activity android:name=".activity.MoodDetailActivity" />
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.AboutActivity" />
+
+        <service
+            android:name=".service.BGMService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

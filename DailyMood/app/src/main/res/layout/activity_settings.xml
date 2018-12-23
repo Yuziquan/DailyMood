@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/bgm_switch"
+            android:textStyle="bold"
+            android:textSize="23sp"/>
+
+        <RadioGroup
+            android:id="@+id/rg_bgm_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_bgm_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/on"
+                android:checked="true"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <RadioButton
+                android:id="@+id/rb_bgm_off"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/off"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:gravity="center_horizontal"
+            android:text="@string/bgm_volume"
+            android:textStyle="bold"
+            android:textSize="23sp"/>
+
+
+        <SeekBar
+            android:id="@+id/sb_music_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/min_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_volume"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFFF00"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_min_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/min_volume"
+                android:textColor="#FFFF00"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+
+
+            <TextView
+                android:id="@+id/cur_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cur_volume"
+                android:layout_centerInParent="true"
+                android:textColor="#FF7F00"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_cur_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cur_volume"
+                android:textColor="#FF7F00"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+
+
+            <TextView
+                android:id="@+id/max_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tv_max_volume"
+                android:text="@string/max_volume"
+                android:textColor="#FF0000"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_max_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:textColor="#FF0000"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

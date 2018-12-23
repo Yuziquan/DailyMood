@@ -23,11 +23,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.wuchangi.dailymood.R;
 import com.wuchangi.dailymood.bean.Mood;
 import com.wuchangi.dailymood.constants.Constants;
 import com.wuchangi.dailymood.db.MoodTableDao;
 import com.wuchangi.dailymood.utils.PictureUriUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 
@@ -35,6 +38,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 同时充当心情卡片创建界面和编辑界面
+ *
+ */
 public class CreateMoodActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_select_date)
@@ -61,6 +68,8 @@ public class CreateMoodActivity extends AppCompatActivity {
     @BindView(R.id.btn_save)
     Button mBtnSave;
 
+    private boolean isEditCard = false;
+
     private MoodTableDao mMoodTableDao;
 
     private static int mYear;
@@ -86,13 +95,45 @@ public class CreateMoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_mood);
 
+        initView();
+    }
+
+    private void initView() {
         ButterKnife.bind(this);
+
         mMoodTableDao = new MoodTableDao(this);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getResources().getString(R.string.create_card));
+
+            String date = getIntent().getStringExtra("date");
+
+            // 进入编辑界面
+            if (date != null) {
+                isEditCard = true;
+
+                actionBar.setTitle(getResources().getString(R.string.edit_card));
+
+                Mood mood = mMoodTableDao.findMoodByDate(date);
+
+                String[] dateArray = date.split("/");
+
+                mTvYear.setText(dateArray[0]);
+                mTvMonth.setText(dateArray[1]);
+                mTvDay.setText(dateArray[2]);
+
+                mEtDescription.setText(mood.getDescription());
+                mPicturePath = mood.getPicturePath();
+
+                Glide.with(this).load(mood.getPicturePath())
+                        .into(mIvPicture);
+
+            }
+            // 进入创建界面
+            else {
+                actionBar.setTitle(getResources().getString(R.string.create_card));
+            }
         }
     }
 
@@ -109,7 +150,7 @@ public class CreateMoodActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_save:
-                saveMood();
+                saveMoodCard();
                 break;
 
             default:
@@ -152,51 +193,75 @@ public class CreateMoodActivity extends AppCompatActivity {
         startActivityForResult(intent, Constants.OPEN_ALBUM);
     }
 
-    private void saveMood() {
-        if (!isSelectDate) {
-            Toast.makeText(this, getResources().getString(R.string.please_select_date), Toast.LENGTH_SHORT).show();
-            return;
+    private void saveMoodCard() {
+        // 当前为心情卡片创建界面
+        if (!isEditCard) {
+            if (!isSelectDate) {
+                Toast.makeText(this, getResources().getString(R.string.please_select_date), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!isSelectPicture) {
+                Toast.makeText(this, getResources().getString(R.string.please_select_picture), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mDate = mYear + "/" + (mMonth + 1) + "/" + mDay;
+            mDescription = mEtDescription.getText().toString();
+
+            final Mood mood = new Mood(mDate, mDescription, mPicturePath);
+
+            // 日期 mDate 已有数据
+            if (mMoodTableDao.findMoodByDate(mDate) != null) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(mDate + " " + getResources().getString(R.string.is_override));
+                builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mMoodTableDao.addMood(mood);
+                        MainActivity.mMoodListAdapter.replaceMood(mood);
+                        Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
+
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.cancel_success), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.show();
+            } else {
+                mMoodTableDao.addMood(mood);
+                MainActivity.mMoodListAdapter.addMood(mood);
+                EventBus.getDefault().post(getResources().getString(R.string.create_card));
+                Toast.makeText(this, getResources().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
+
+                finish();
+            }
         }
+        // 当前为心情卡片编辑界面
+        else {
+            String date = mTvYear.getText() + "/" + mTvMonth.getText() + "/" + mTvDay.getText();
+            String description = mEtDescription.getText().toString();
+            Mood mood = new Mood(date, description, mPicturePath);
 
-        if (!isSelectPicture) {
-            Toast.makeText(this, getResources().getString(R.string.please_select_picture), Toast.LENGTH_SHORT).show();
-            return;
-        }
+            // 日期 date 已有数据
+            if (mMoodTableDao.findMoodByDate(date) != null && !date.equals(getIntent().getStringExtra("date"))) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(date + " " + getResources().getString(R.string.existed_data));
+                builder.setPositiveButton(getResources().getString(R.string.ok), null);
+                builder.show();
+            } else {
+                mMoodTableDao.updateMood(getIntent().getStringExtra("date"), mood);
+                MainActivity.mMoodListAdapter.updateMood(getIntent().getStringExtra("date"), mood);
+                Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.modify_success), Toast.LENGTH_SHORT).show();
 
-        mDate = mYear + "/" + (mMonth + 1) + "/" + mDay;
-        mDescription = mEtDescription.getText().toString();
-
-        final Mood mood = new Mood(mDate, mDescription, mPicturePath);
-
-        // 日期mDate 已有数据
-        if(mMoodTableDao.findMoodByDate(mDate) != null){
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(mDate + " " +  getResources().getString(R.string.is_override));
-            builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    mMoodTableDao.addMood(mood);
-                    MainActivity.mMoodListAdapter.replaceMood(mood);
-                    Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
-
-                    finish();
-                }
-            });
-            builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.cancel_success), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            builder.show();
-        } else {
-            mMoodTableDao.addMood(mood);
-            MainActivity.mMoodListAdapter.addMood(mood);
-            Toast.makeText(CreateMoodActivity.this, getResources().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
-
-            finish();
+                finish();
+            }
         }
     }
 
@@ -209,7 +274,6 @@ public class CreateMoodActivity extends AppCompatActivity {
                     Toast.makeText(this, getResources().getString(R.string.welcome), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, getResources().getString(R.string.hint), Toast.LENGTH_SHORT).show();
-                    finish();
                 }
                 break;
 
@@ -252,5 +316,11 @@ public class CreateMoodActivity extends AppCompatActivity {
 
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, CreateMoodActivity.class));
+    }
+
+    public static void actionEditStart(Context context, String date) {
+        Intent intent = new Intent(context, CreateMoodActivity.class);
+        intent.putExtra("date", date);
+        context.startActivity(intent);
     }
 }

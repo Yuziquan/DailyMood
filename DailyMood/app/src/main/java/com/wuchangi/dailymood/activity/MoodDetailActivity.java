@@ -2,12 +2,10 @@ package com.wuchangi.dailymood.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +16,6 @@ import com.wuchangi.dailymood.db.MoodTableDao;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class MoodDetailActivity extends AppCompatActivity {
 
@@ -41,7 +36,13 @@ public class MoodDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_detail);
 
+        initView();
+    }
+
+
+    private void initView() {
         ButterKnife.bind(this);
+
         mMoodTableDao = new MoodTableDao(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -50,11 +51,6 @@ public class MoodDetailActivity extends AppCompatActivity {
             actionBar.setTitle(getResources().getString(R.string.your_mood));
         }
 
-        initView();
-    }
-
-
-    private void initView() {
         String date = getIntent().getStringExtra("date");
         Mood mood = mMoodTableDao.findMoodByDate(date);
 

@@ -8,9 +8,19 @@
         android:id="@+id/rv_mood_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_empty_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/empty_hint"/>
     
     
     <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -33,14 +43,6 @@
             app:fab_colorNormal="@color/fab_orange_bg"
             app:fab_icon="@drawable/clear"
             app:fab_title="@string/clear_all_cards"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/fab_red_bg"
-            app:fab_icon="@drawable/about"
-            app:fab_title="@string/about_app"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
