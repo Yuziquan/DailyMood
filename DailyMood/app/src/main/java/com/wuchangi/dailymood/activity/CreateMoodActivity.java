@@ -76,7 +76,6 @@ public class CreateMoodActivity extends AppCompatActivity {
     private static int mMonth;
     private static int mDay;
 
-    private boolean isSelectDate = false;
     private boolean isSelectPicture = false;
 
     private String mDate;
@@ -102,6 +101,10 @@ public class CreateMoodActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mMoodTableDao = new MoodTableDao(this);
+
+        mTvYear.setText("" + mYear);
+        mTvMonth.setText("" + (mMonth + 1));
+        mTvDay.setText("" + mDay);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -166,7 +169,6 @@ public class CreateMoodActivity extends AppCompatActivity {
                 mYear = year;
                 mMonth = month;
                 mDay = dayOfMonth;
-                isSelectDate = true;
 
                 mTvYear.setText("" + mYear);
                 mTvMonth.setText("" + (mMonth + 1));
@@ -196,11 +198,6 @@ public class CreateMoodActivity extends AppCompatActivity {
     private void saveMoodCard() {
         // 当前为心情卡片创建界面
         if (!isEditCard) {
-            if (!isSelectDate) {
-                Toast.makeText(this, getResources().getString(R.string.please_select_date), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             if (!isSelectPicture) {
                 Toast.makeText(this, getResources().getString(R.string.please_select_picture), Toast.LENGTH_SHORT).show();
                 return;

@@ -7,7 +7,6 @@
     <string name="description">您的心情或感想</string>
     <string name="select_picture">点击选择图片</string>
     <string name="save">保存</string>
-    <string name="please_select_date">请选择日期</string>
     <string name="please_select_picture">请选择图片</string>
     <string name="save_success">保存成功！</string>
     <string name="welcome">欢迎使用 每日心情 APP~~</string>
