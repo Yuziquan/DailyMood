@@ -41,6 +41,7 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
         mMoodTableDao = moodTableDao;
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mood_item, parent, false);
