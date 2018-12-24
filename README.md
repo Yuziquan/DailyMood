@@ -5,7 +5,7 @@
 
 <br/>
 
-<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/app_icon.png" width=150 height=150 />
+<img src="/Screenshots/app_icon.png" width=150 height=150 />
 
 
 
