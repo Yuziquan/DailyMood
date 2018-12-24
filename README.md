@@ -31,7 +31,7 @@
 
 <div align=center>
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/1.png" width=250 height=440 />
 
 </div>
 
