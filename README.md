@@ -41,7 +41,7 @@
 
 <div align=center> 
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/2.png" width=250 height=440 />
 
 </div>
 
@@ -51,7 +51,7 @@
 
 <div align=center> 
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/3.png" width=250 height=440 />
 
 </div>
 
@@ -60,7 +60,7 @@
 #### 4. 卡片详情页
 <div align=center> 
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/4.png" width=250 height=440 />
 
 </div>
 
@@ -73,7 +73,7 @@
 
 <div align=center> 
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/5.png" width=250 height=440 />
 
 </div>
 
@@ -82,7 +82,7 @@
 #### 6. 关于界面
 <div align=center> 
 
-<img src="" width=250 height=440 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/6.png" width=250 height=440 />
 
 </div>
 
