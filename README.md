@@ -5,7 +5,7 @@
 
 <br/>
 
-<img src="https://github.com/Yuziquan/WCCalendar2/blob/master/Screenshots/app_icon.png" width=150 height=150 />
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/app_icon.png" width=150 height=150 />
 
 ### 一、项目功能
 
