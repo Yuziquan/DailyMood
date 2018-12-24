@@ -77,12 +77,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvMoodList.setLayoutManager(linearLayoutManager);
         mRvMoodList.setAdapter(mMoodListAdapter);
-
-        mRvMoodList.setOnFlingListener(new RecyclerView.OnFlingListener() {
+        mRvMoodList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public boolean onFling(int velocityX, int velocityY) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 mFloatingActionsMenu.collapse();
-                return true;
             }
         });
 
