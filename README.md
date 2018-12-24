@@ -21,7 +21,8 @@
 
 * 支持心情卡片的创建、编辑、删除、清空；
 * 支持心情卡片的查看；
-* 支持简单背景音乐的播放。
+* 支持简单背景音乐的播放；
+* 支持国际化。
 
 ***
 
@@ -83,6 +84,15 @@
 <div align=center> 
 
 <img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/6.png" width=250 height=440 />
+
+</div>
+
+***
+
+#### 7. 国际化效果
+<div align=center> 
+
+<img src="https://github.com/Yuziquan/DailyMood/blob/master/Screenshots/7.png" width=250 height=440 />
 
 </div>
 
