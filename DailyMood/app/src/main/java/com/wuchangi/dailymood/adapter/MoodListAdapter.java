@@ -85,6 +85,7 @@ public class MoodListAdapter extends RecyclerView.Adapter<MoodListAdapter.ViewHo
     }
 
 
+
     @Override
     public int getItemCount() {
         return mMoodList.size();
